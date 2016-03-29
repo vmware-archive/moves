@@ -1,0 +1,12 @@
+---
+applications:
+- name: move_score_bot
+  subdomain: move_score_bot
+  memory: 512M
+  instances: 1
+  random-route: false
+  path: .
+  buildpack: https://github.com/ihuston/python-conda-buildpack.git
+  command: python score_bot.py
+  services:
+    - p-redis
