@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Accelerometer Javascript Test</title>
+<meta name="viewport" content="width=device-width,user-scalable=yes" />
+<style>
+body {
+	font-family: helvetica, arial, sans serif;
+}
+
+</style>
+</head>
+
+<body>
+<div id="content">
+
+
+
+<br>
+<br>
+
+<a href="javascript:void(0);" id="start_score">Begin model scoring</a>
+<span id='score_result'></span>
+
+<br>
+<a href="javascript:void(0);" id="stop_score">Stop model scoring</a>
+
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script type="text/javascript" src="http://smoothiecharts.org/smoothie.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+var x = 0 ,  y = 0,
+    vx = 0, vy = 0,
+	ax = 0, ay = 0;
+	
+if (window.DeviceMotionEvent != undefined) {
+	window.ondevicemotion = function(e) {
+		ax = event.accelerationIncludingGravity.x;
+		ay = event.accelerationIncludingGravity.y;
+		az = event.accelerationIncludingGravity.z
+	}
+
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var accel_data = [];
+
+    recordTime = 5*1000
+    channel = {{channel}}; // jinja syntax
+    //create json output
+    function event2json() {
+        return {'data':true,
+        'channel':channel,
+        'data_type':'scoring',
+        'timestamp':Date.now(),
+        'score':false,
+        'orientation':{'x':null,'y':null,'z':null},
+        'motion':{'x':ax,'y':ay,'z':az}
+        };
+    };
+
+    var captureJSON = {'channel':1111111111,
+                       'data_type':null,
+                       'label':null};
+
+    function logData() { 
+        captureJSON['data_type'] = 'scoring';
+        socket.emit('data_capture_phase',captureJSON);
+        console.log(captureJSON)
+    };
+
+    var scoreResult;
+    $('a#start_score').bind('click', function() {
+        logStream = logData();
+        channel_id = channel;
+        url = 'https://move-score-bot.cfapps.pez.pivotal.io/score/' + channel_id;
+        //url = 'http://0.0.0.0:8082/score/' + channel_id;
+        
+        setInterval( function() {
+            $.get( url, function( data ) {
+                scoreResult = data;
+                document.getElementById("score_result").innerHTML = scoreResult;
+                console.log(11);
+            });
+        },1000);
+    });
+
+    $('a#stop_score').bind('click', function() {
+        captureJSON['data_type'] = null;
+        captureJSON['label'] = null;
+        console.log(captureJSON)
+        socket.emit('data_capture_phase',captureJSON);
+
+    });
+     
+} 
+</script>
+
+</body>
+</html>
+
