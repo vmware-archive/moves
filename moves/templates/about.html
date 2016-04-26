@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Moves</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/moves.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://d1fto35gcfffzn.cloudfront.net/images/favicon.ico' rel='shortcut icon' type='image/vnd.microsoft.icon'>
+    
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Moves</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="about">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <br>
+            <h3>Summary</h3>
+            This application demonstrates a real-time data science pipeline using Pivotal Cloud Foundry (PCF), Pivotal Big Data Suite, Spring Cloud Data Flow, and Python-based open source machine learning. The pipeline builds and scores a customized “personal activity recognition model” using streaming accelerometric sensor data from a smartphone. The pipeline applies broadly and would allow us to evaluate and score almost any feed of streaming data - from sensor data to unstructured text data - to drive real-time action.
+            <h3>How to</h3>
+            <ol class="list">
+              <li>Link a smartphone to capture streaming accelerometric data</li>
+                <ul>
+                    <li>Visit <a href="http://move.cfapps.pez.pivotal.io/sensor">
+                        http://move.cfapps.pez.pivotal.io/sensor</a> on a smartphone
+                    </li>
+                    <li>Enter a unique number that will be used to link the sensor to the app</li>
+                    <li>Keep the screen on and put the smartphone in your front pocket</li>
+                    <li>Note: currently only Safari on iPhone 6s is tested</li>
+                </ul>
+                <br>
+              
+                <li>Build a customized human activity classification model</li>
+                <ul>
+                    <li>Visit <a href="http://move.cfapps.pez.pivotal.io/train">
+                        http://move.cfapps.pez.pivotal.io/train</a> on a computer 
+                    </li>
+                  <li>Perform three unique activities with the smartphone in your front pocket</li>
+                  <li>Click "Build the Model" and proceed to the dashboard</li>
+                </ul>
+                <br>
+              </li>
+                    <li>Score the model and view results in the dashboard</li>
+                    <ul>
+                        <li>Visit <a href="http://move.cfapps.pez.pivotal.io/dashboard">
+                            http://move.cfapps.pez.pivotal.io/dashboard</a> on a computer 
+                        </li>
+                      <li>Hit start and perform one of the three trained activities</li>
+                    </ul>
+            </ol>    
+            <br>
+            <iframe width="560" height="420"
+src="https://www.youtube.com/embed/KWVVXONCUsA">
+                
+            </iframe>
+            <h3>Framework</h3>
+            <img src="/static/img/demo_architecture.png" alt="demo_architecture" style="width:100%;">
+            <h4>Model scoring as service</h4>
+            <ul class="list">
+              <li>Model operationalization: highly scalable using Pivotal Cloud Foundry</li>
+                <ul>
+                  <li>Application auto-scaling</li>
+                  <li>As the data grows, the model scales</li>
+                </ul>
+              <li>Application autonomy</li>
+                <ul>
+                  <li>The model application is independent of other applications = faster development iterations</li>
+                  <li>Effective computation resource allocation - using PCF, can dynamically allocate instance count, memory, and CPU resources</li>
+                </ul>
+              <li>Multiple applications can access the model scoring service</li>
+              <li>We are leveraging powerful open-source libraries (Python, sklearn, pandas, etc.)</li>
+            </ul>         
+            <img src="/static/img/scoring_architecture.png" alt="scoring architecture" style="width:65%;">
+            <p style="width:65%;">The model scoring workflow. The model scoring PCF application is provided as a service via an API call.<p>
+            <h3>Machine Learning</h3>
+            <ul class="list">
+              <li>Data: Three dimensional accelerometric time-series data recorded at 15 Hz (15x/second) </li>
+              <li>Training data set: 20 seconds per training activity</li>
+              <li>Feature generation:
+                <ul>
+                  <li>Two second moving window on training data</li>
+                  <li>Time-domain summary statistics and Fourier transform coefficients</li>
+                </ul>
+              </li>
+              <li>Algorithm: <a href="https://en.wikipedia.org/wiki/Random_forest">Random Forest model</a></li>
+            </ul>            
+            <img src="/static/img/learning_curve.png" alt="learning curve" style="width:65%;">
+            <p style="width:65%;">Learning Curve for an individual user showing accuracy as a function of activity training time.<p>
+            <h3> Other applications of the framework - examples </h3>
+            <img src="/static/img/IoT_flow.png" alt="demo_architecture" style="width:100%;">
+            <br>
+            <hr></hr>
+            <br>
+            <img src="/static/img/marketing_flow.png" alt="demo_architecture" style="width:100%;">
+            <h3> Additional Resources </h3>
+            <ul>
+            <li>
+            A <a href="https://blog.pivotal.io/data-science-pivotal/products/scoring-as-a-service-to-operationalize-algorithms-for-real-time"> blog post</a> providing an introduction to real-time data science and a deeper dive into the framework
+            </li>
+            <li>
+            Contact Chris Rawles (crawles@pivotal.io) and Jarrod Vawdrey (jvawdrey@pivotal.io) for more details
+            </li>
+            
+            </ul>
+            
+            
+        
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-3">
+                    </div>
+                    <div class="footer-col col-md-6">
+                        <h3>Pivotal Data Science</h3>
+                    <div class="col-lg-12">
+                        Copyright &copy; Pivotal 2015-16
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="static/js/jquery.js"></script>
+    
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="static/js/classie.js"></script>
+    <script src="static/js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="static/js/jqBootstrapValidation.js"></script>
+    <script src="static/js/contact_me.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="static/js/freelancer.js"></script>
+
+    <script type="text/javascript">
+    
+    $('button#go_to_dashboard').bind('click', function() {
+        channel = document.getElementsByName('channel')[0].value
+        scoreUrl = 'scoring' + '/' + channel;
+        document.location.href = scoreUrl;
+    });
+    
+    
+
+    
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76191007-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</body>
+
+</html>
