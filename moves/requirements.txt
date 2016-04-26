@@ -1,5 +1,0 @@
-eventlet
-flask-socketio
-Flask
-gunicorn
-redis
