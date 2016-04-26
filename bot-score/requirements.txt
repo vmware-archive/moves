@@ -1,0 +1,8 @@
+flask
+flask-restful
+flask-socketio
+numpy
+redis
+pandas
+scipy
+sklearn
