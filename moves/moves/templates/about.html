@@ -69,14 +69,23 @@
     <section id="portfolio">
         <div class="container">
             <br>
-            <h3>Summary</h3>
-            This application demonstrates a real-time data science pipeline using Pivotal Cloud Foundry (PCF), Pivotal Big Data Suite, Spring Cloud Data Flow, and Python-based open source machine learning. The pipeline builds and scores a customized “personal activity recognition model” using streaming accelerometric sensor data from a smartphone. The pipeline applies broadly and would allow us to evaluate and score almost any feed of streaming data - from sensor data to unstructured text data - to drive real-time action.
+            <h3>Scoring-as-a-Service To Operationalize Algorithms For Real-time</h3>
+            <p>This application demonstrates real-time model scoring as a service Pivotal Cloud Foundry (PCF), Pivotal Big Data Suite, Spring Cloud Data Flow, and Python-based open source machine learning. The pipeline applies broadly and would allow us to evaluate and score almost any feed of streaming data - from sensor data to unstructured text data - to drive real-time action.</p>
+            <p> Take a look at this <a href="https://blog.pivotal.io/data-science-pivotal/products/scoring-as-a-service-to-operationalize-algorithms-for-real-time">blog post</a> for more information.
+            <h3>Applications Of Real-time Data Science</h3>
+            <p>While there are many non-real-time data science use cases, real-time data science is a requirement for many applications including the Internet of Things (IoT), <a href="https://blog.pivotal.io/data-science-pivotal/case-studies/data-science-labs-predictive-modeling-to-detect-healthcare-fraud-waste-and-abuse" target="_blank">fraud detection</a>, risk calculation, health-related alerts, <a href="https://blog.pivotal.io/data-science-pivotal/case-studies/graph-mining-for-detecting-coordinated-network-attacks" target="_blank">network analysis</a>, marketing personalization, <a href="http://www.americanbanker.com/news/bank-technology/inside-synchrony-financials-innovation-lab-1078560-1.html" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://www.americanbanker.com/news/bank-technology/inside-synchrony-financials-innovation-lab-1078560-1.html', 'customized rewards programs']);" target="_blank">customized rewards programs</a>, and more.</p>
+            <p>Within the IoT realm, our heavy industry customers strive towards zero unplanned downtime, and we have built predictive models to target their high-risk equipment. For example, the Pivotal Data Science team recently worked with a major oil and gas customer to implement a mud motor failure prediction model. Operationalizing this predictive model has significant impact— according to <a href="http://www.aogr.com/magazine/cover-story/predictive-analytics-technology-boosts-efficiency-reduces-npt-in-onshore-dr" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://www.aogr.com/magazine/cover-story/predictive-analytics-technology-boosts-efficiency-reduces-npt-in-onshore-dr', 'The American Oil &amp; Gas Reporter']);" target="_blank">The American Oil &amp; Gas Reporter</a>, mud motor failure could account for 35% of non-productive time and cost $150,000 per incident. The Pivotal Data Science team has also tackled many other IoT problems—detecting and tracking jet-engine degradation using sensor data, predictive maintenance in automobiles, automobile driver identification, <a href="https://blog.pivotal.io/data-science-pivotal/products/multivariate-time-series-forecasting-for-virtual-machine-capacity-planning" target="_blank">virtual machine capacity forecasting</a>, <a href="https://blog.pivotal.io/data-science-pivotal/features/a-peek-under-the-hood-of-the-connected-car-what-it-does-how-it-applies-to-iot-systems" target="_blank">a connected car pipeline</a>,<a href="https://blog.pivotal.io/data-science-pivotal/features/a-peek-under-the-hood-of-the-connected-car-what-it-does-how-it-applies-to-iot-systems" target="_blank"> and more</a>.</p>
             <h3>How to</h3>
+            <iframe width="560" height="420" src="https://www.youtube.com/embed/KWVVXONCUsA">
+            </iframe>
+            <br>
+            <br>
+
             <ol class="list">
               <li>Link a smartphone to capture streaming accelerometric data</li>
                 <ul>
                     <li>Visit <a href="http://move.cfapps.pez.pivotal.io/sensor">
-                        http://move.cfapps.pez.pivotal.io/sensor</a> on a smartphone
+                        http://moves.cfapps.pez.pivotal.io/sensor</a> on a smartphone
                     </li>
                     <li>Enter a unique number that will be used to link the sensor to the app</li>
                     <li>Keep the screen on and put the smartphone in your front pocket</li>
@@ -87,7 +96,7 @@
                 <li>Build a customized human activity classification model</li>
                 <ul>
                     <li>Visit <a href="http://move.cfapps.pez.pivotal.io/train">
-                        http://move.cfapps.pez.pivotal.io/train</a> on a computer 
+                        http://moves.cfapps.pez.pivotal.io/train</a> on a computer 
                     </li>
                   <li>Perform three unique activities with the smartphone in your front pocket</li>
                   <li>Click "Build the Model" and proceed to the dashboard</li>
@@ -97,16 +106,11 @@
                     <li>Score the model and view results in the dashboard</li>
                     <ul>
                         <li>Visit <a href="http://move.cfapps.pez.pivotal.io/dashboard">
-                            http://move.cfapps.pez.pivotal.io/dashboard</a> on a computer 
+                            http://moves.cfapps.pez.pivotal.io/dashboard</a> on a computer 
                         </li>
                       <li>Hit start and perform one of the three trained activities</li>
                     </ul>
             </ol>    
-            <br>
-            <iframe width="560" height="420"
-src="https://www.youtube.com/embed/KWVVXONCUsA">
-                
-            </iframe>
             <h3>Framework</h3>
             <img src="/static/img/demo_architecture.png" alt="demo_architecture" style="width:100%;">
             <h4>Model scoring as service</h4>
@@ -157,18 +161,6 @@ src="https://www.youtube.com/embed/KWVVXONCUsA">
             
             </ul>
             
-            
-        
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         </div>
     </section>
 
