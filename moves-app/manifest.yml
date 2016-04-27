@@ -1,6 +1,6 @@
 ---
 applications:
-- name: moves1
+- name: moves
   memory: 1024MB
   disk_quota: 1024MB
   random-route: false

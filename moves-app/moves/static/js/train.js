@@ -138,22 +138,24 @@ $('button#train_model').bind('click', function() {
     dataIsStoredUrl = 'stored_data/training/' + channel
     $.when(
         $.get(dataIsStoredUrl, function( data ) {
-            trainSetLen = parseInt(data)
-            dataSuccesfullyStored = (trainSetLen > 0);
-        });
-    ).then(function() {
-        if (dataSuccesfullyStored) {
-            if (runningLocally) {
-                trainRequestUrl = 'http://0.0.0.0:8081/train/' + channel;
-            } else {
-                trainRequestUrl = 'http://move-train-bot.cfapps.pez.pivotal.io/train/' + channel;
-            };
-            $.get(trainRequestUrl, function( data ) {
-                $('button#train_model').css('border', "solid 4px #18bc9c")
-            });
-            scoreUrl = 'dashboard' + '/' + channel;
-            document.getElementById('go_to_scoring').setAttribute("href", scoreUrl);
+        trainSetLen = parseInt(data)
+        dataSuccesfullyStored = (trainSetLen > 0);
+        })
+        ).then(function() {
+                if (dataSuccesfullyStored) {
+        if (runningLocally) {
+            trainRequestUrl = 'http://0.0.0.0:8081/train/' + channel
+        } else {
+            trainRequestUrl = 'http://move-train-bot.cfapps.pez.pivotal.io/train/' + channel
         };
+        $.get(trainRequestUrl, function( data ) {
+            //document.getElementById('model_training_complete').innerHTML = '&#9989;';
+            $('button#train_model').css('border', "solid 4px #18bc9c")
+        });
+        scoreUrl = 'dashboard' + '/' + channel
+        document.getElementById('go_to_scoring').setAttribute("href", scoreUrl);
+    };
+
     });
 });
 
