@@ -7,7 +7,7 @@ This application demonstrates real-time model scoring as a service Pivotal Cloud
 
 Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/products/scoring-as-a-service-to-operationalize-algorithms-for-real-time) for more information.
 
-[![Alt text](https://img.youtube.com/vi/KWVVXONCUsA/0.jpg)](https://www.youtube.com/watch?v=KWVVXONCUsA)
+[![Alt text](https://img.youtube.com/vi/j6yiVhm9bhs/0.jpg)](https://www.youtube.com/watch?v=j6yiVhm9bhs)
 
 ## Pre-requisites
 
