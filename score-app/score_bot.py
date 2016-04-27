@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+
 """
-bot-score
+score_bot.py
 ~~~~~~~~~~~~~
-Scores streaming data (incoming via RabbitMQ) using ML model from redis 
+Scores streaming data (from Redis) using trained model (accessed from Redis)
 """
 
 import cPickle
@@ -16,27 +17,27 @@ import numpy as np
 import helper_functions
 import model_functions
 
-##
 
-# load pickle object
 win_size = 30
 fmin,fmax,sr = 0,8,win_size
-
 component_names = ['x','y','z']
 
+    
+app = Flask(__name__)
+api = restful.Api(app)
+
+# parse time-series data in json file and convert to numpy array
 def json2ts(di):
     return np.array([float(eval(di)['motion'][c]) for c in component_names])
 
+# score streaming data
 def score_in_data(data,cl,channel_id):
     in_data = np.array([json2ts(r) for r in data])
     pred_label,pred_score = model_functions.apply_model(in_data.T,cl,fmin,fmax,sr)
     res = {'channel':channel_id,'label':pred_label ,'label_value':pred_score}
     return res
-    
-    
-app = Flask(__name__)
-api = restful.Api(app)
 
+# needed to make this application accessable for cross domain access
 @app.after_request
 def after_request(response):
   response.headers.add('Access-Control-Allow-Origin', '*')
@@ -46,7 +47,6 @@ def after_request(response):
 
 @app.route('/score/<string:channel>')
 def score(channel):
-    print channel
     model_store_key = 'channel_{}_model'.format(channel)
     cl = cPickle.loads(r[model_store_key])
     rkey = 'channel_{}_scoring'.format(channel)
@@ -66,4 +66,3 @@ else:                                       # running on CF
 
 r = helper_functions.connect_redis_db(redis_service_name)
 app.run(host='0.0.0.0', port=PORT, debug=DEBUG,threaded=True)
-

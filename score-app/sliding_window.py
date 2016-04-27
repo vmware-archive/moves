@@ -1,5 +1,16 @@
+# -*- coding: utf-8 -*-
+
+"""
+sliding_window.py
+~~~~~~~~~~~~~
+Efficient multi-dimensional sliding window.
+
+source: http://www.johnvinyard.com/
+"""
+
 import numpy as np
 from numpy.lib.stride_tricks import as_strided as ast
+
 def norm_shape(shape):
     '''
     Normalize numpy array shapes so they're always expressed as a tuple, 

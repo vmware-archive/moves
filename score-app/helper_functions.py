@@ -1,23 +1,16 @@
+# -*- coding: utf-8 -*-
+
+"""
+helper_functions.py
+~~~~~~~~~~~~~
+Helper functions for building a movement classification app
+"""
+
 import json
 import os
-import pandas
-import redis
 import types
 
-def json2redis(data,r):
-    if isinstance(data, types.ListType):
-        for row in data:
-            channel = row['channel']
-            data_type = row['data_type']
-            rkey = 'channel_{}_{}'.format(channel,data_type)
-
-            r.lpush(rkey,row)
-    else:
-        channel = data['channel']
-        data_type = data['data_type']
-        rkey = 'channel_{}_{}'.format(channel,data_type)
-
-        r.lpush(rkey,data)
+import redis
 
 # initialize redis connection for local and CF deployment
 def connect_redis_db(redis_service_name = None):
