@@ -1,15 +1,27 @@
-import helper_functions
+# -*- coding: utf-8 -*-
+
+"""
+moves
+~~~~~~~~~~~~~
+The moves PCF app contains the logic/front end for both the sensor and dashboard
+application. This code launches the backend webserver of moves 
+using flask with eventlet (for concurrency) and socket.io
+
+author: Chris Rawles
+"""
+
+import ast
+import json
+import os
+import time
+import eventlet
 
 from flask import Flask, render_template, request,jsonify
 from flask.ext.socketio import SocketIO
-import json
-import time
-import ast
-import os
-import eventlet
+
+import helper_functions
 
 eventlet.monkey_patch()
-
 app = Flask(__name__)
 socketio = SocketIO(app)
 
@@ -20,17 +32,6 @@ def index():
 @app.route("/train")
 def train():
     return render_template('train.html',)
-
-@socketio.on('random_message')
-def streaming_data(json_data):
-    """ 
-    saves streaming data from sensor to redis 
-    """
-    socketio.emit('echo1','sent back')
-
-#@app.route("/scoring")
-#def score():
-#    return render_template('score.html')
 
 @app.route("/dashboard/<string:channel>")
 def dashboard(channel):
@@ -46,7 +47,12 @@ def about():
 
 @socketio.on('data_capture_phase')
 def write_capture_stage_to_redis(json_data):
-    ''' We want to keep current recording state in redis '''
+    ''' 
+    We want to keep current recording state in redis.
+        1) training
+        2) scoring
+        3) neither training or scoring
+    '''
     channel = json_data['channel']
     capture_phase = json_data['data_type']
     label = json_data['label']
@@ -55,24 +61,25 @@ def write_capture_stage_to_redis(json_data):
                              'label' : label}
     r[rkey] = current_capture_phase
 
-
-#@socketio.on('training_data')
-#def store_training_data(json_data):
-#    text = json_data['message']
-#    channel,stored_data = helper_functions.json2redis(text,r)
-#    socketio.emit('stored_training_data?', {'channel':channel,
-#                                            'stored_data': stored_data})
-
-#@socketio.on('streaming_data_for_scoring')
-#def handle_source(json_data):
-#    text = json_data['message']
-#    channel,stored_data = helper_functions.json2redis(text,r)
-#    #TODO emit channel_{}_is_connected and light up green box and not-empty
+@socketio.on('streaming_data')
+def streaming_data(json_data):
+    """ 
+    Capture streaming data from sensor to redis:
+        1) if training phase - save all data to redis
+        2) if scoring phase - save only some recent data to redis
+        3) if neither - do not save data to redis
+    """
+    try:
+        channel = json_data['channel']
+        rkey = 'channel_{}_capture_phase'.format(channel);
+        helper_functions.capture_data_to_redis(json_data,rkey,r)    
+    except Exception, e:
+        socketio.emit('echo1',str(e))
 
 @socketio.on('get_streaming_data')
 def get_streaming_data(json_data):
     """ 
-    retrieves streaming data for plotting (in training and scoring phase)
+    Retrieves streaming data for plotting (in training and scoring phase)
     """
     channel = json_data['channel']
     data_type = json_data['data_type']
@@ -82,18 +89,7 @@ def get_streaming_data(json_data):
         out_channel = '{}_{}_data'.format(channel,data_type)
         socketio.emit(out_channel,cur_data)
 
-
-@socketio.on('streaming_data')
-def streaming_data(json_data):
-    """ 
-    Saves streaming data from sensor to redis 
-    """
-    try:
-        channel = json_data['channel']
-        rkey = 'channel_{}_capture_phase'.format(channel);
-        helper_functions.capture_data_to_redis(json_data,rkey,r)    
-    except Exception, e:
-        socketio.emit('echo1',str(e))
+## these are for testing purposes 
 
 @app.route('/stored_data/<string:data_type>/<string:channel>')
 def check_if_stored_data(data_type,channel):
@@ -114,11 +110,6 @@ def clear_redis_key(json_data):
     print 'deleting' + rkey
     del r[rkey]
 
-
-@socketio.on('send_message_from_log')
-def handle_source(json_data):
-    socketio.emit('echo', {'echo': '10'})
-
 @app.route('/redis_key/<string:key>')
 def get_redis_key(key):
     return str(r.lrange(key,0,-1))
@@ -132,17 +123,17 @@ def flush_all():
     r.flushall()
     return jsonify(r.info())
 
+##
 
-if __name__ == "__main__":
-    if os.environ.get('VCAP_SERVICES') is None: # running locally
-        PORT = 8080
-        DEBUG = True
-        redis_service_name = None
-    else:                                       # running on CF
-        PORT = int(os.getenv("PORT"))
-        DEBUG = False
-        #DEBUG = True
-        redis_service_name = 'p-redis'
-        
-    r = helper_functions.connect_redis_db(redis_service_name)
-    socketio.run(app,host='0.0.0.0',port=PORT, debug=DEBUG)
+if os.environ.get('VCAP_SERVICES') is None: # running locally
+    PORT = 8080
+    DEBUG = True
+    redis_service_name = None
+else:                                       # running on CF
+    PORT = int(os.getenv("PORT"))
+    DEBUG = False
+    #DEBUG = True
+    redis_service_name = 'p-redis'
+    
+r = helper_functions.connect_redis_db(redis_service_name)
+socketio.run(app,host='0.0.0.0',port=PORT, debug=DEBUG)

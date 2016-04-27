@@ -1,7 +1,14 @@
-var x = 0 ,  y = 0,
-    vx = 0, vy = 0,
-	ax = 0, ay = 0;
-	
+/**
+ * sensor.js
+ *
+ * Captures accelerometric data from smartphone and emits to backend
+ * using socket.io
+ *
+ * @author Chris Rawles
+ **/
+var ax = 0, ay = 0;
+
+// accelerometer API
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
 		ax = event.accelerationIncludingGravity.x;
@@ -11,8 +18,7 @@ if (window.DeviceMotionEvent != undefined) {
 
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-    recordTime = 5*1000
-    //create json output
+    // create json output - will be sent to backend server
     function event2json(label) {
         currentSample = {'data':true,
         'channel':channel,
@@ -25,15 +31,19 @@ if (window.DeviceMotionEvent != undefined) {
         return currentSample;
     };
 
+    // for testing purposes only
     function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
     }
 
+    // for testing
     runningLocally = false;
-    if (document.domain == "0.0.0.0") {
+    if (document.domain == "0.0.0.0") { 
         runningLocally = true;
     }
 
+    // capture data, emit via socketio, and update html
+    document.getElementById("start_stream").innerHTML = "<br>"
     function logData() { 
         var dataInterval = setInterval( function() {
         if (runningLocally) {
@@ -50,20 +60,11 @@ if (window.DeviceMotionEvent != undefined) {
         }, 67)
     };
 
-    socket.emit('random_message',1);
-    console.log('random_message');
-    socket.on('echo1', 
-        function (data) {console.log(data)});
-    
-
-
-
-    document.getElementById("start_stream").innerHTML = "<br>"
-
     // keep sensor awake
     var noSleep = new NoSleep();
-    noSleep.enable(); // keep the screen on!
+    noSleep.enable(); 
 
+    // hide input to prevent user from incorrectly using app
     if (!runningLocally & !isMobile.any) {
         document.getElementById('channel').disabled = true;
         $('#link_phone').remove();
@@ -77,7 +78,6 @@ if (window.DeviceMotionEvent != undefined) {
             function myFunction() {
                 document.getElementById("channel").disabled = true;
             }
-            //$('button#start_recording').toggleClass("btn-success");
             logData();
         });
     };

@@ -1,12 +1,10 @@
 ---
 applications:
-- name: move
+- name: moves
   memory: 1024MB
   disk_quota: 1024MB
   random-route: false
   buildpack: python_buildpack
-  command: python main.py
+  command: python runserver.py
   services:
     - p-redis
-
-
