@@ -74,7 +74,7 @@ def streaming_data(json_data):
         rkey = 'channel_{}_capture_phase'.format(channel);
         helper_functions.capture_data_to_redis(json_data,rkey,r)    
     except Exception, e:
-        socketio.emit('echo1',str(e))
+        socketio.emit('error_message',str(e))
 
 @socketio.on('get_streaming_data')
 def get_streaming_data(json_data):

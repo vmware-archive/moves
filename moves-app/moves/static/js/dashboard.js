@@ -27,6 +27,13 @@ if (document.domain == "0.0.0.0") {
 document.getElementById("score_result").innerHTML = '<br>'
 document.getElementById("channel_name").innerHTML = channel;
     
+// for debugging
+socket.on('error_message', 
+    function (data) {
+        console.log(data);
+    }
+);
+
 
 // show more confident results with less opacity
 function calcOpacity(data) {
