@@ -16,3 +16,16 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 
 ## Launching your own version
 
+>cd moves-app
+>cf push; cd ..
+>
+>cf train-app
+>cf push; cd ..
+>
+>cd score-app
+>cf push; cd ..
+>
+>cf create-service p-redis shared-vm p-redis
+>cf bind-service moves p-redis
+>cf bind-service move_train_bot p-redis
+>cf bind-service move_score_bot p-redis
