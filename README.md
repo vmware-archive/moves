@@ -14,7 +14,7 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 * Pivotal Cloud Foundry
     * Redis service
 
-## Launching your own version
+## Deploying the app
 
     cd moves-app
     cf push; cd ..
