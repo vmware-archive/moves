@@ -3,7 +3,7 @@
 """
 model_functions.py
 ~~~~~~~~~~~~~
-Functions for building a movement classification model
+Functions for building a movement classification model features
 """
 
 import numpy as np

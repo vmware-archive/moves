@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+model_functions.py
+~~~~~~~~~~~~~
+Functions for movement classification - features and modeling
+"""
+
 import cPickle
 import os
 import random
@@ -41,15 +49,6 @@ def znorm(s):
     s_znorm  = s_demean/s_std[:,None]
     return s_znorm
 
-#bin frequency data
-def bin_array(X,n):
-    X_binned = []
-    for row in X:
-        x_binned = []
-        x_binned = np.array([np.mean(row[i*n : ((i*n) + n)]) for i in range(X.shape[1]/n)])
-        X_binned.append(x_binned)
-    return np.array(X_binned)
-
 def gen_periodogram(ts,fmin,fmax,fs,norm = True):
     if norm:
         ts = znorm(ts)
@@ -89,8 +88,6 @@ def apply_model(tc,clf):
     pred_label = clf.predict(x)[0]
     return pred_label,prob
 
-import random
-
 def train_model(data_store_key, r):
     # variables
     win_size = 30 
@@ -104,11 +101,9 @@ def train_model(data_store_key, r):
         xyz = [float(eval(di)['motion'][c]) for c in ['x','y','z']]
         return time_label + xyz
 
-    print data_store_key
     td = [json2ts(v) for v in r.lrange(data_store_key,0,-1)]
     df = pd.DataFrame(td,columns = cnames)
     movement_names = set(df['label'])
-    print movement_names
     # build features
     y,mw = [],[]
     for label in movement_names:
