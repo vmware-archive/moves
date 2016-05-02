@@ -52,7 +52,7 @@ function startScoring() {
     if (runningLocally) {
         url = 'http://0.0.0.0:8082/score/' + channel;
     } else {
-        url = 'https://move-score-bot.cfapps.pez.pivotal.io/score/' + channel;
+        url = 'https://pmoves-score-app.cfapps.pez.pivotal.io/score/' + channel;
     };
     
     // show label in real time

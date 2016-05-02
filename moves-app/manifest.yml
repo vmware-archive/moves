@@ -1,6 +1,6 @@
 ---
 applications:
-- name: moves
+- name: pmoves
   memory: 1024MB
   disk_quota: 1024MB
   random-route: false

@@ -146,10 +146,9 @@ $('button#train_model').bind('click', function() {
         if (runningLocally) {
             trainRequestUrl = 'http://0.0.0.0:8081/train/' + channel
         } else {
-            trainRequestUrl = 'http://move-train-bot.cfapps.pez.pivotal.io/train/' + channel
+            trainRequestUrl = 'http://pmoves-train-app.cfapps.pez.pivotal.io/train/' + channel
         };
         $.get(trainRequestUrl, function( data ) {
-            //document.getElementById('model_training_complete').innerHTML = '&#9989;';
             $('button#train_model').css('border', "solid 4px #18bc9c")
         });
         scoreUrl = 'dashboard' + '/' + channel

@@ -33,6 +33,7 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
   return response
 
+# train a model and delete the training data
 @app.route('/train/<string:channel>')
 def train(channel):
     # show the post with the given id, the id is an integer
@@ -43,6 +44,7 @@ def train(channel):
     cl = train_functions.train_model(data_store_key,r)
     if cl:
         r[model_store_key] = cPickle.dumps(cl, 1)
+        del r[data_store_key]
         return 'Model trained : ' + str(time.ctime()) 
     else:
         return 'Error model not trained'

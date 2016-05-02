@@ -1,11 +1,11 @@
 ---
 applications:
-- name: move_train_bot
-  memory: 512M
+- name: pmoves-train-app
+  memory: 1024M
   instances: 1
   random-route: false
   path: .
   buildpack: https://github.com/ihuston/python-conda-buildpack.git
-  command: python train_bot.py
+  command: python train_app.py
   services:
-    - p-redis
+    - moves-redis
