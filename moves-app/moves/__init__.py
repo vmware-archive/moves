@@ -123,6 +123,9 @@ def flush_all():
     r.flushall()
     return jsonify(r.info())
 
+@app.route('/info123')
+def info123():
+    return os.environ['VCAP_SERVICES']
 ##
 
 if os.environ.get('VCAP_SERVICES') is None: # running locally

@@ -21,7 +21,7 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
     cd moves-app
     cf push; cd ..
 
-    cf train-app
+    cd train-app
     cf push; cd ..
 
     cd score-app

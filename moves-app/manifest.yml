@@ -7,4 +7,4 @@ applications:
   buildpack: python_buildpack
   command: python runserver.py
   services:
-    - p-redis
+      - moves-redis
