@@ -16,7 +16,7 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 
 ## Deploying the app
 
-    cf create-service p-redis shared-vm p-redis
+    cf create-service p-redis shared-vm moves-redis
 
     cd moves-app
     cf push; cd ..
