@@ -31,3 +31,7 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
     #flask scoring app
     cd score-app
     cf push; cd ..
+
+## Contact
+
+For more information, please contact Chris Rawles (crawles@pivotal.io) and Jarrod Vawdrey (jvawdrey@pivotal.io)
