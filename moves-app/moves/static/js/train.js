@@ -146,7 +146,7 @@ $('button#train_model').bind('click', function() {
         if (runningLocally) {
             trainRequestUrl = 'http://0.0.0.0:8081/train/' + channel
         } else {
-            trainRequestUrl = 'http://pmoves-train-app.cfapps.pez.pivotal.io/train/' + channel
+            trainRequestUrl = 'http://pmoves-train-app1.cfapps.pez.pivotal.io/train/' + channel
         };
         $.get(trainRequestUrl, function( data ) {
             $('button#train_model').css('border', "solid 4px #18bc9c")
