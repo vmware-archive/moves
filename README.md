@@ -18,20 +18,21 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 
 [http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html](http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html)
 
+This has been tested using Pivotal [PEZ](https://apps.run.pez.pivotal.io/)
+
+    1) Update the 3 names in manifest.yml
+        - Name of dashboard/sensor app
+        - Name of training application
+        - Name of scoring application
+
+    2) Edit moves-app/moves/static/js/movesParams.js to reflect names and 
+    routes of training and scoring application
+
+    3)
     cf create-service p-redis shared-vm moves-redis
+    cf push
 
-    # sensor and dashboard flask app
-    cd moves-app
-    cf push; cd ..
     
-    # flask training app 
-    cd train-app
-    cf push; cd ..
-
-    #flask scoring app
-    cd score-app
-    cf push; cd ..
-
 ## Contact
 
 For more information, please contact Chris Rawles (crawles@pivotal.io) and Jarrod Vawdrey (jvawdrey@pivotal.io)
