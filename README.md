@@ -21,7 +21,8 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
         - Name of training app
         - Name of scoring app
 
-    2) Edit file "moves-app/moves/static/js/movesParams.js" to reflect route names of training and scoring applications
+    2) Edit file "moves-app/moves/static/js/movesParams.js" to reflect route 
+    names of training and scoring applications
 
     3) cf create-service p-redis shared-vm moves-redis
        cf push
