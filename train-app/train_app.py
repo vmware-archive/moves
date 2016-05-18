@@ -44,7 +44,7 @@ def train(channel):
     cl = train_functions.train_model(data_store_key,r)
     if cl:
         r[model_store_key] = cPickle.dumps(cl, 1)
-        r.expire(model_store_key,60*60*24) # expire after one day
+        r.expire(model_store_key,60*60*2) # expire after 2 hours
         del r[data_store_key]
         return 'Model trained : ' + str(time.ctime()) 
     else:
