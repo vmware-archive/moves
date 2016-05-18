@@ -1,0 +1,28 @@
+applications:
+- buildpack: python_buildpack
+  command: python runserver.py
+  disk_quota: 1024MB
+  memory: 1024MB
+  name: pmoves
+  random-route: false
+  path: ./moves-app
+  services:
+  - moves-redis
+- buildpack: https://github.com/ihuston/python-conda-buildpack.git
+  command: python train_app.py
+  instances: 1
+  memory: 1024M
+  name: moves-train-app
+  path: ./train-app
+  random-route: false
+  services:
+  - moves-redis
+- buildpack: https://github.com/ihuston/python-conda-buildpack.git
+  command: python score_app.py
+  instances: 1
+  memory: 1024M
+  name: moves-score-app
+  path: ./score-app
+  random-route: false
+  services:
+  - moves-redis

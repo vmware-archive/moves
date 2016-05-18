@@ -50,12 +50,6 @@ def train(channel):
     else:
         return 'Error model not trained'
 
-
-
-@app.route('/')
-def index():
-    return 'train home1'
-
 if os.environ.get('VCAP_SERVICES') is None: # running locally
     PORT = 8081
     DEBUG = True

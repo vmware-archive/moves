@@ -67,6 +67,11 @@ $('button#link_sensor').bind('click', function() {
     );
 });
 
+socket.on('notification', function(note) {
+    console.log(note);
+});
+
+
 // when user hit start activity - clear old training data, update data type
 // for recordTime, plot data, show progress bar, and change button color
 $('button#start_activity_1').bind('click', function() {
@@ -84,7 +89,8 @@ $('button#start_activity_1').bind('click', function() {
     setTimeout(function() {
         $('button#start_activity_1').css('border', "solid 4px #18bc9c");
         prog1.path.setAttribute('stroke','#18bc9c');
-        chart1.stop()
+        chart1.stop();
+        clearInterval(getPlotData);
         },waitToRecord+recordTime
     );
 
@@ -104,7 +110,8 @@ $('button#start_activity_2').bind('click', function() {
     setTimeout(function() {
         $('button#start_activity_2').css('border', "solid 4px #18bc9c");
         prog2.path.setAttribute('stroke','#18bc9c');
-        chart2.stop()
+        chart2.stop();
+        clearInterval(getPlotData);
     },waitToRecord+recordTime);
 
 
@@ -124,7 +131,8 @@ $('button#start_activity_3').bind('click', function() {
     setTimeout(function() {
         $('button#start_activity_3').css('border', "solid 4px #18bc9c");
         prog3.path.setAttribute('stroke','#18bc9c');
-        chart3.stop()
+        chart3.stop();
+        clearInterval(getPlotData);
     },waitToRecord+recordTime);
     
     
@@ -146,7 +154,7 @@ $('button#train_model').bind('click', function() {
         if (runningLocally) {
             trainRequestUrl = 'http://0.0.0.0:8081/train/' + channel
         } else {
-            trainRequestUrl = 'http://pmoves-train-app1.cfapps.pez.pivotal.io/train/' + channel
+            trainRequestUrl = movesParams.trainAppUrl + '/train/' + channel
         };
         $.get(trainRequestUrl, function( data ) {
             $('button#train_model').css('border', "solid 4px #18bc9c")

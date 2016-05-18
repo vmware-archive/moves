@@ -7,7 +7,6 @@ The moves PCF app contains the logic/front end for both the sensor and dashboard
 application. This code launches the backend webserver of moves 
 using flask with eventlet (for concurrency) and socket.io
 
-author: Chris Rawles
 """
 
 import ast
@@ -73,8 +72,9 @@ def streaming_data(json_data):
         channel = json_data['channel']
         rkey = 'channel_{}_capture_phase'.format(channel);
         helper_functions.capture_data_to_redis(json_data,rkey,r)    
+        socketio.emit('notification',str('stored data'));
     except Exception, e:
-        socketio.emit('error_message',str(e))
+        socketio.emit('notification',str(e));
 
 @socketio.on('get_streaming_data')
 def get_streaming_data(json_data):
@@ -89,43 +89,41 @@ def get_streaming_data(json_data):
         out_channel = '{}_{}_data'.format(channel,data_type)
         socketio.emit(out_channel,cur_data)
 
-## these are for testing purposes 
+@app.route('/cur_data/<string:channel>')
+def get_cur_data(channel):
+    rkey = 'channel_{}_curdata'.format(channel)
+    return jsonify(ast.literal_eval(r.lrange(rkey,0,0)[0]))
 
 @app.route('/stored_data/<string:data_type>/<string:channel>')
 def check_if_stored_data(data_type,channel):
     rkey = 'channel_{}_{}'.format(channel,data_type)
     return str(r.llen(rkey))
 
-@app.route('/cur_data/<string:channel>')
-def get_cur_data(channel):
-    rkey = 'channel_{}_curdata'.format(channel)
-    print rkey
-    return jsonify(ast.literal_eval(r.lrange(rkey,0,0)[0]))
-
-@socketio.on('clear_redis_key')
-def clear_redis_key(json_data):
-    channel = json_data['channel']
-    data_type = json_data['data_type']
-    rkey = 'channel_{}_{}'.format(channel,data_type)
-    print 'deleting' + rkey
-    del r[rkey]
-
-@app.route('/redis_key/<string:key>')
-def get_redis_key(key):
-    return str(r.lrange(key,0,-1))
-
-@app.route('/redis_info')
-def redis_info():
-    return jsonify(r.info())
-
-@app.route('/flush_all')
-def flush_all():
-    r.flushall()
-    return jsonify(r.info())
-
-@app.route('/info123')
-def info123():
-    return os.environ['VCAP_SERVICES']
+## these are for testing purposes 
+#@socketio.on('clear_redis_key')
+#def clear_redis_key(json_data):
+#    channel = json_data['channel']
+#    data_type = json_data['data_type']
+#    rkey = 'channel_{}_{}'.format(channel,data_type)
+#    print 'deleting' + rkey
+#    del r[rkey]
+#
+#@app.route('/redis_key/<string:key>')
+#def get_redis_key(key):
+#    return str(r.lrange(key,0,-1))
+#
+#@app.route('/redis_info')
+#def redis_info():
+#    return jsonify(r.info())
+#
+#@app.route('/flush_all')
+#def flush_all():
+#    r.flushall()
+#    return jsonify(r.info())
+#
+#@app.route('/info123')
+#def info123():
+#    return os.environ['VCAP_SERVICES']
 ##
 
 if os.environ.get('VCAP_SERVICES') is None: # running locally
@@ -135,7 +133,6 @@ if os.environ.get('VCAP_SERVICES') is None: # running locally
 else:                                       # running on CF
     PORT = int(os.getenv("PORT"))
     DEBUG = False
-    #DEBUG = True
     redis_service_name = 'p-redis'
     
 r = helper_functions.connect_redis_db(redis_service_name)
