@@ -16,7 +16,7 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 
 ## Deploying the app on Pivotal Cloud Foundry
 
-    1) Update the 3 applications names in manifest.yml
+    1) Update the 3 application names in manifest.yml
         - Name of dashboard/sensor app
         - Name of training app
         - Name of scoring app

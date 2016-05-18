@@ -72,7 +72,6 @@ def streaming_data(json_data):
         channel = json_data['channel']
         rkey = 'channel_{}_capture_phase'.format(channel);
         helper_functions.capture_data_to_redis(json_data,rkey,r)    
-        socketio.emit('notification',str('stored data'));
     except Exception, e:
         socketio.emit('notification',str(e));
 
