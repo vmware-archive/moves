@@ -16,24 +16,19 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 
 ## Deploying the app on Pivotal Cloud Foundry
 
-[http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html](http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html)
+    1) Update the 3 applications names in manifest.yml
+        - Name of dashboard/sensor app
+        - Name of training app
+        - Name of scoring app
+
+    2) Edit file "moves-app/moves/static/js/movesParams.js" to reflect route names of training and scoring applications
+
+    3) cf create-service p-redis shared-vm moves-redis
+       cf push
 
 This has been tested using Pivotal [PEZ](https://apps.run.pez.pivotal.io/)
 
-    1) 
-    Update the 3 names in manifest.yml
-        - Name of dashboard/sensor app
-        - Name of training application
-        - Name of scoring application
-
-    2) 
-    Edit file "moves-app/moves/static/js/movesParams.js" to reflect 
-    route names of training and scoring applications
-
-    3)
-    cf create-service p-redis shared-vm moves-redis
-    cf push
-
+[http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html](http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html)
     
 ## Contact
 
