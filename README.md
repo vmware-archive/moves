@@ -16,16 +16,29 @@ Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/pro
 
 ## Deploying the app on Pivotal Cloud Foundry
 
-    1) Update the 3 application names in manifest.yml
-        - Name of dashboard/sensor app
-        - Name of training app
-        - Name of scoring app
+### 1. Update the 3 application names in manifest.yml
 
-    2) Edit file "moves-app/moves/static/js/movesParams.js" to reflect route 
-    names of training and scoring applications
+These app names will become part of the domain URLs, so change as desired.
+ 
+    ...
+    name: DASHBOARD-APP-NAME
+    ...
+    name: TRAINING-APP-NAME
+    ...
+    name: SCORING-APP-NAME
+    ...
 
-    3) cf create-service p-redis shared-vm moves-redis
-       cf push
+*Note that underscores are not allowed in the app names. Cloud Foundry automatically converts them to dashes, which disrupts URL routing.*
+
+### 2. Update parameters in JavaScript
+
+Edit file "moves-app/moves/static/js/movesParams.js" to reflect route 
+names of training and scoring applications as specified in previous step. 
+
+### 3. Create redis service and push application
+
+    cf create-service p-redis shared-vm moves-redis
+    cf push
 
 This has been tested using Pivotal [PEZ](https://apps.run.pez.pivotal.io/)
 

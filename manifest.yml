@@ -3,7 +3,7 @@ applications:
   command: python runserver.py
   disk_quota: 1024MB
   memory: 1024MB
-  name: NAMEOFMOVES
+  name: DASHBOARD-APP-NAME
   random-route: false
   path: ./moves-app
   services:
@@ -12,7 +12,7 @@ applications:
   command: python train_app.py
   instances: 1
   memory: 1024M
-  name: NAMEOFTRAININGAPP
+  name: TRAINING-APP-NAME
   path: ./train-app
   random-route: false
   services:
@@ -21,7 +21,7 @@ applications:
   command: python score_app.py
   instances: 1
   memory: 1024M
-  name: NAMEOFSCORINGAPP
+  name: SCORING-APP-NAME
   path: ./score-app
   random-route: false
   services:
