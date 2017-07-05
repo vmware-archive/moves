@@ -95,7 +95,7 @@ def connect_redis_db(redis_service_name = None):
         env_vars = os.environ['VCAP_SERVICES']
         rediscloud_service = json.loads(env_vars)[redis_service_name][0]
         credentials = rediscloud_service['credentials']
-        DB_HOST = credentials['host']
+        DB_HOST = credentials['hostname']
         DB_PORT = credentials['port']
         DB_PW = password=credentials['password']
         REDIS_DB = 0

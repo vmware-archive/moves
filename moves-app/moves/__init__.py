@@ -83,10 +83,13 @@ def get_streaming_data(json_data):
     channel = json_data['channel']
     data_type = json_data['data_type']
     rkey = 'channel_{}_{}'.format(channel,data_type)
-    cur_data = ast.literal_eval(r.lrange(rkey,0,0)[0])
-    if cur_data['data_type'] == data_type:
-        out_channel = '{}_{}_data'.format(channel,data_type)
-        socketio.emit(out_channel,cur_data)
+    if rkey:
+        cur_data = ast.literal_eval(r.lrange(rkey,0,0)[0])
+        if cur_data['data_type'] == data_type:
+            out_channel = '{}_{}_data'.format(channel,data_type)
+            socketio.emit(out_channel,cur_data)
+    else:
+        pass # Don't emit anything
 
 @app.route('/cur_data/<string:channel>')
 def get_cur_data(channel):
@@ -96,6 +99,7 @@ def get_cur_data(channel):
 @app.route('/stored_data/<string:data_type>/<string:channel>')
 def check_if_stored_data(data_type,channel):
     rkey = 'channel_{}_{}'.format(channel,data_type)
+    print str(r.llen(rkey))
     return str(r.llen(rkey))
 
 ## these are for testing purposes 
@@ -132,7 +136,7 @@ if os.environ.get('VCAP_SERVICES') is None: # running locally
 else:                                       # running on CF
     PORT = int(os.getenv("PORT"))
     DEBUG = False
-    redis_service_name = 'p-redis'
+    redis_service_name = 'rediscloud'
     
 r = helper_functions.connect_redis_db(redis_service_name)
 socketio.run(app,host='0.0.0.0',port=PORT, debug=DEBUG)
