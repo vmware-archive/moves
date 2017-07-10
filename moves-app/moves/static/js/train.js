@@ -1,4 +1,4 @@
-var socket = io.connect('http://' + document.domain + ':' + location.port);
+var socket = io.connect('https://' + document.domain + ':' + 4443);
 var channel;
 var recordTime = 20*1000
 var waitToRecord = 1*1000

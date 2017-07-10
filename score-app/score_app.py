@@ -62,7 +62,7 @@ if os.environ.get('VCAP_SERVICES') is None: # running locally
 else:                                       # running on CF
     PORT = int(os.getenv("PORT"))
     DEBUG = False
-    redis_service_name = 'p-redis'
+    redis_service_name = 'rediscloud'
 
 r = helper_functions.connect_redis_db(redis_service_name)
 app.run(host='0.0.0.0', port=PORT, debug=DEBUG,threaded=True)

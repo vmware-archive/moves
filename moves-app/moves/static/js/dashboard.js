@@ -7,7 +7,7 @@
  * @author Chris Rawles
  **/
 
-var socket = io.connect('http://' + document.domain + ':' + location.port);
+var socket = io.connect('https://' + document.domain + ':' + 4443);
 
 var scoreResult;
 var inScoring = false;

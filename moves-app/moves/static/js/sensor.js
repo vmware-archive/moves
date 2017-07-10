@@ -16,7 +16,7 @@ if (window.DeviceMotionEvent != undefined) {
 		az = event.accelerationIncludingGravity.z
 	}
 
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var socket = io.connect('https://' + document.domain + ':' + 4443);
 
     // create json output - will be sent to backend server
     function event2json(label) {

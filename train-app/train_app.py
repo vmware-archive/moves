@@ -19,7 +19,7 @@ import train_functions
 
 # handshake parameters
 exchange_name       = 'model_init'
-redis_service_name  = 'p-redis'
+redis_service_name  = 'rediscloud'
 
 app = Flask(__name__)
 api = restful.Api(app)
@@ -46,6 +46,7 @@ def train(channel):
         r[model_store_key] = cPickle.dumps(cl, 1)
         r.expire(model_store_key,60*60*2) # expire after 2 hours
         del r[data_store_key]
+        print 'Model trained : ' + str(time.ctime()) 
         return 'Model trained : ' + str(time.ctime()) 
     else:
         return 'Error model not trained'
@@ -57,7 +58,7 @@ if os.environ.get('VCAP_SERVICES') is None: # running locally
 else:                                       # running on CF
     PORT = int(os.getenv("PORT"))
     DEBUG = False
-    redis_service_name = 'p-redis'
+    redis_service_name = 'rediscloud'
     
 r = helper_functions.connect_redis_db(redis_service_name)
 app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
