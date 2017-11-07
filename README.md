@@ -46,4 +46,6 @@ This has been tested using Pivotal [PEZ](https://apps.run.pez.pivotal.io/)
     
 ## Contact
 
-For more information, please contact Chris Rawles (crawles@pivotal.io) and Jarrod Vawdrey (jvawdrey@pivotal.io)
+Chris Rawles is the original author. 
+
+For more information, please contact Scott Hajek (shajek@pivotal.io) and Jarrod Vawdrey (jvawdrey@pivotal.io)
