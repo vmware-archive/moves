@@ -3,7 +3,7 @@
 
 This application demonstrates real-time model scoring as a service using Pivotal Cloud Foundry (PCF), Pivotal Big Data Suite, Spring Cloud Data Flow, and Python-based open source machine learning. The pipeline applies broadly and would allow us to evaluate and score almost any feed of streaming data - from sensor data to unstructured text data - to drive real-time action.
 
-Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/products/scoring-as-a-service-to-operationalize-algorithms-for-real-time) and the [about page](https://moves.cfapps.pez.pivotal.io/about) for more information.
+Take a look at this [blog post](https://blog.pivotal.io/data-science-pivotal/products/scoring-as-a-service-to-operationalize-algorithms-for-real-time) and the [about page](https://ds-moves-dashboard.pcfbeta.io/about) for more information.
 
 [![Alt text](https://img.youtube.com/vi/j6yiVhm9bhs/0.jpg)](https://www.youtube.com/watch?v=j6yiVhm9bhs)
 
@@ -35,10 +35,10 @@ names of training and scoring applications as specified in previous step.
 
 ### 3. Create redis service and push application
 
-    cf create-service p-redis shared-vm moves-redis
+    cf create-service p.redis cache-small moves-redis
     cf push
 
-This has been tested using Pivotal [PEZ](https://apps.run.pez.pivotal.io/)
+This has been tested using Pivotal [PCFBeta](https://start.pcfbeta.io/)
 
 [http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html](http://docs.run.pivotal.io/devguide/deploy-apps/deploy-app.html)
     
