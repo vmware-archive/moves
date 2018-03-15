@@ -16,7 +16,7 @@ import time
 import eventlet
 
 from flask import Flask, render_template, request,jsonify
-from flask.ext.socketio import SocketIO
+from flask_socketio import SocketIO
 
 import helper_functions
 
@@ -136,7 +136,7 @@ if os.environ.get('VCAP_SERVICES') is None: # running locally
 else:                                       # running on CF
     PORT = int(os.getenv("PORT"))
     DEBUG = False
-    redis_service_name = 'rediscloud'
+    redis_service_name = 'p.redis'
     
 r = helper_functions.connect_redis_db(redis_service_name)
 socketio.run(app,host='0.0.0.0',port=PORT, debug=DEBUG)
